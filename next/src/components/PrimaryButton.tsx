@@ -16,7 +16,7 @@ export default function PrimaryButton({ children, onClick, icon, className }: Pr
     <Button
       onClick={onClick}
       className={clsx(
-        "group rounded-full border border-black bg-white text-black transition duration-300 ease-in-out hover:hover:bg-neutral-200 focus-visible:bg-white/90 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/30",
+        "group rounded-lg border-2 border-purple-500 bg-gradient-to-r from-purple-500 to-indigo-600 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:from-indigo-600 hover:to-purple-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300/30 shadow-lg hover:shadow-purple-500/30",
         className
       )}
     >

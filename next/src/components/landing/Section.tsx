@@ -61,7 +61,7 @@ const Section = ({ title, subtitle, className }: ResourceProps) => {
     <div
       className={clsx(
         className,
-        "group relative flex h-full rounded-xl border border-white/20 bg-black p-10 transition duration-300 hover:border-sky-500/60"
+        "group relative flex h-full rounded-xl border border-white/20 bg-white p-10 transition duration-300 hover:border-sky-500/60"
       )}
     >
       <Highlight color="blue" />
