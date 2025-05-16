@@ -15,7 +15,7 @@ export default function TextButton({ children, onClick, icon, className }: TextB
     <Button
       onClick={onClick}
       className={clsx(
-        "group rounded-full bg-transparent text-neutral-400 transition duration-200 ease-in-out hover:bg-white/10 hover:text-white focus-visible:bg-neutral-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-neutral-500",
+        "group rounded-lg px-4 py-2 bg-transparent text-gray-600 transition-all duration-200 ease-in-out hover:bg-purple-50 hover:text-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/30",
         className
       )}
     >

@@ -61,14 +61,15 @@ const Section = ({ title, subtitle, className }: ResourceProps) => {
     <div
       className={clsx(
         className,
-        "group relative flex h-full rounded-xl border border-white/20 bg-white p-10 transition duration-300 hover:border-sky-500/60"
+        "group relative flex h-full rounded-2xl bg-gradient-to-br from-white to-slate-50 p-8 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-purple-500/10",
+        "border border-slate-200/50 hover:border-purple-500/30"
       )}
     >
-      <Highlight color="blue" />
-      <div className="relative rounded-xl">
-        <h3 className="text-xl font-bold leading-7 ">{title}</h3>
-        <p className="text-sm text-zinc-400">{subtitle}</p>
+      <div className="relative rounded-xl z-10">
+        <h3 className="text-xl font-bold leading-7 text-gray-800 mb-2">{title}</h3>
+        <p className="text-sm text-gray-600">{subtitle}</p>
       </div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
     </div>
   );
 };

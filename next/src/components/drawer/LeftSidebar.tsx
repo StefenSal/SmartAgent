@@ -104,24 +104,6 @@ const LeftSidebar = ({ show, setShow, onReload }: DisplayProps & { onReload?: ()
             </LinkItem>
           ))}
         </ul>
-        <li className="mb-2">
-          <div className="mx-2 flex items-center justify-center gap-3">
-            {SOCIAL_LINKS.map((link) => (
-              <LinkIconItem
-                key={link.name}
-                href={link.href}
-                onClick={() => {
-                  void router.push(link.href);
-                }}
-              >
-                <link.icon
-                  size={20}
-                  className="transition-all group-hover:rotate-3 group-hover:scale-125"
-                />
-              </LinkIconItem>
-            ))}
-          </div>
-        </li>
         <li>
           <div className="mb-2 ml-2 text-xs font-semibold text-slate-10"></div>
         </li>

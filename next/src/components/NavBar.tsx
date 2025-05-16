@@ -36,36 +36,44 @@ export default function NavBar() {
 
   return (
     <FadeIn duration={3}>
-      <Disclosure as="nav" className="z-50 w-full bg-gradient-to-r from-slate-50/90 to-white/90 backdrop-blur-md shadow-lg text-gray-800">
+      <Disclosure as="nav" className="z-50 w-full bg-gradient-to-r from-black/80 via-blue-900/80 to-purple-900/80 backdrop-blur-xl shadow-2xl border-b border-white/10">
         {({ open }) => (
           <>
-            <div className="align-center flex h-20 flex-row justify-between px-6">
+            <div className="align-center flex h-24 flex-row justify-between px-8">
               <div className="flex flex-shrink-0 cursor-pointer items-center lg:flex-1">
-                <Image
-                  src="/logos/dark-default-solid.svg"
-                  width="35"
-                  height="35"
-                  alt="SmartAgent"
-                  className="mb-1 mr-3"
-                />
-                <span className="text-2xl font-semibold tracking-tight text-purple-600">SmartAgent</span>
+                <div className="relative w-12 h-12 mr-4">
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 animate-pulse-slow blur-xl opacity-50" />
+                  <Image
+                    src="/logos/dark-default-solid.svg"
+                    width="48"
+                    height="48"
+                    alt="SmartAgent"
+                    className="relative rounded-xl bg-black/50 p-2"
+                  />
+                </div>
+                <span className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">SmartAgent</span>
               </div>
               <div className="hidden flex-1 items-center justify-center xmd:flex">
-                <div className="flex h-[50px] items-center self-center overflow-hidden rounded-xl bg-white/50 px-4 py-2 shadow-inner">
+                <div className="flex h-[60px] items-center self-center overflow-hidden rounded-2xl bg-white/5 backdrop-blur-lg px-2">
                   {navigation.map((item, i) => (
                     <a
                       key={item.name}
                       href={item.href}
                       className={clsx(
-                        "relative flex flex-col items-center justify-center p-2 px-6 text-center font-inter text-sm font-medium tracking-wide transition-colors duration-300",
-                        currentIndex === i ? "text-purple-600" : "text-gray-600 hover:text-purple-500"
+                        "relative flex flex-col items-center justify-center p-2 px-8 text-center font-inter text-sm font-medium tracking-wide transition-all duration-300",
+                        currentIndex === i 
+                          ? "text-white" 
+                          : "text-gray-400 hover:text-white"
                       )}
                       onMouseEnter={() => setHoveredButtonIndex(i)}
                       onMouseLeave={() => setHoveredButtonIndex(0)}
                     >
                       {item.name}
                       {currentIndex === i && (
-                        <div className="absolute bottom-0 h-0.5 w-12 rounded-full bg-purple-500" />
+                        <>
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-sm" />
+                          <div className="absolute bottom-0 h-0.5 w-12 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+                        </>
                       )}
                     </a>
                   ))}
