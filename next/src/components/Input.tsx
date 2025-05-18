@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import React, { useRef, useEffect, forwardRef } from "react";
 import type { ChangeEvent, KeyboardEvent, ReactNode, RefObject } from "react";
 
 import Label from "./Label";
@@ -21,9 +22,26 @@ interface InputProps {
   onKeyDown?: (e: KeyboardEvent<InputElement>) => void;
 }
 
-const Input = (props: InputProps) => {
+const Input = forwardRef<InputElement, InputProps>((props, ref) => {
   const isTypeTextArea = () => {
     return props.type === "textarea";
+  };
+
+  // For auto-expanding textarea
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  useEffect(() => {
+    if (isTypeTextArea() && textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+    }
+  }, [props.value]);
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+    }
+    props.onChange(e);
   };
 
   return (
@@ -34,15 +52,22 @@ const Input = (props: InputProps) => {
       {isTypeTextArea() ? (
         <textarea
           className={clsx(
-            "delay-50 h-15 w-full resize-none rounded-xl border-2 border-slate-7 bg-slate-1 p-2 text-sm tracking-wider text-slate-12 outline-none transition-all selection:bg-sky-300 placeholder:text-slate-8 hover:border-sky-200 focus:border-sky-400 sm:h-20 md:text-lg",
+            "delay-50 w-full min-h-[48px] max-h-96 resize-none overflow-hidden rounded-xl border-2 border-slate-7 bg-slate-1 p-2 pr-12 text-sm tracking-wider text-slate-12 outline-none transition-all selection:bg-sky-300 placeholder:text-slate-8 hover:border-sky-200 focus:border-sky-400 md:text-lg",
             props.disabled && "cursor-not-allowed",
             props.left && "md:rounded-l-none",
             props.small && "text-sm sm:py-[0]"
           )}
-          ref={props.inputRef as RefObject<HTMLTextAreaElement>}
+          rows={2}
+          ref={(el) => {
+            textareaRef.current = el;
+            if (typeof ref === "function") ref(el);
+            else if (ref) (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+            if (props.inputRef) (props.inputRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+          }}
           placeholder={props.placeholder}
           value={props.value}
-          onChange={props.onChange}
+          onChange={handleInput}
+          onInput={handleInput}
           disabled={props.disabled}
           onKeyDown={props.onKeyDown}
           {...props.attributes}
@@ -67,6 +92,8 @@ const Input = (props: InputProps) => {
       )}
     </div>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

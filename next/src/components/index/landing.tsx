@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import type { KeyboardEvent, RefObject } from "react";
 import { useState } from "react";
 import { FaCog, FaPlay, FaStar } from "react-icons/fa";
+import { FiSend } from "react-icons/fi";
 
 import { useAgentStore } from "../../stores";
 import type { Message } from "../../types/message";
@@ -58,36 +59,37 @@ const Landing = (props: LandingProps) => {
         transition={{ duration: 0.75, delay: 0.5, type: "easeInOut" }}
         className="z-10 flex w-full flex-col gap-6"
       >
-        <Input
-          inputRef={props.goalInputRef}
-          left={
-            <>
-              <FaStar />
-              <span className="ml-2">{`${t("LABEL_AGENT_GOAL")}`}</span>
-            </>
-          }
-          disabled={agent != null}
-          value={props.goalInput}
-          onChange={(e) => props.setGoalInput(e.target.value)}
-          onKeyDown={props.handleKeyPress}
-          placeholder={`${t("PLACEHOLDER_AGENT_GOAL")}`}
-          type="textarea"
-        />
-
-        <div className="flex w-full flex-row items-center justify-center gap-3">
-          <Button
-            ping
-            onClick={() => setShowToolsDialog(true)}
-            className="h-full bg-gradient-to-t from-slate-9 to-slate-12 hover:shadow-depth-3"
-          >
-            <FaCog />
-          </Button>
-          <Button
-            onClick={props.handlePlay}
-            className="border-0 bg-gradient-to-t from-[#02FCF1] to-[#A02BFE] subpixel-antialiased saturate-[75%] hover:saturate-100"
-          >
-            <FaPlay />
-          </Button>
+        <div className="relative w-full">
+          <Input
+            inputRef={props.goalInputRef}
+            disabled={agent != null}
+            value={props.goalInput}
+            onChange={(e) => props.setGoalInput(e.target.value)}
+            onKeyDown={props.handleKeyPress}
+            placeholder={`${t("PLACEHOLDER_AGENT_GOAL")}`}
+            type="textarea"
+          />
+          <div className="pointer-events-none absolute bottom-3 right-3 z-10">
+            <div className="pointer-events-auto group">
+              <Button
+                onClick={props.handlePlay}
+                disabled={!props.goalInput || props.goalInput.trim() === ""}
+                className={
+                  (!props.goalInput || props.goalInput.trim() === "")
+                    ? "h-8 w-8 aspect-square rounded-full bg-gray-200 text-gray-400 flex items-center justify-center cursor-not-allowed p-0 border-0 shadow-none"
+                    : "h-8 w-8 aspect-square rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-all duration-200 p-0 border-0 shadow-md"
+                }
+              >
+                <span className="sr-only">Send</span>
+                <FiSend className="text-base m-auto rotate-45" />
+              </Button>
+              {(!props.goalInput || props.goalInput.trim() === "") && (
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  Message is empty
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </motion.div>
     </>
